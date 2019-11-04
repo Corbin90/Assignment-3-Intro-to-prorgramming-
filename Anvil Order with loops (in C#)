@@ -1,0 +1,163 @@
+using System;
+using static System.Console;
+namespace ConsoleApp1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int numOfAnvils;
+            string name;
+            string street;
+            string city;
+            string state;
+            string zipCode;
+
+            string decision;
+
+            string decision2;
+            decimal total = 0;
+            decimal SalesTax = 0.0995m;
+            const decimal FrequentShopperProgram = 0.15m;
+            decimal anvilPrice;
+            decimal taxAfterDiscount;
+            decimal discount;
+
+            Random ran = new Random();
+            int guess = ran.Next(1, 11);
+            int myGuess = 0;
+            WriteLine("************************ ACME Anvils Corporation *******************************");
+            WriteLine("Supporting the animation industry for 70 years and counting!");
+            WriteLine("\nCountdown to Order");
+            do
+            {
+
+                for (int i = 3; i > 0; i--)
+                {
+                    WriteLine(i);
+                    System.Threading.Thread.Sleep(1000);
+                }
+                Console.Beep();
+                WriteLine("************************ NEW ORDER ***************************");
+                WriteLine("\nHi, I'm Rahsaan. How many anvils would you like to order today? ");
+                Write("Number of anvils: ");
+                numOfAnvils = int.Parse(ReadLine());
+                if (numOfAnvils <= 9)
+                {
+                    anvilPrice = 80.0m;
+                }
+                else if (numOfAnvils <= 19)
+                {
+                    anvilPrice = 72.35m;
+                }
+                else
+                {
+                    anvilPrice = 67.99m;
+                }
+
+                total = anvilPrice * numOfAnvils;
+                WriteLine("\nI can certainly help you with that. Could you please give me your name and address?");
+                Write($"{"First and last name: \t",-15}");
+                name = ReadLine();
+                Write($"{"Street Address: \t",-15}");
+                street = ReadLine();
+                Write($"{"City: \t",-23}");
+                city = ReadLine();
+                Write($"{"State (2 letters): \t",-5}");
+                state = ReadLine().ToUpper();
+                while (state.Length != 2)
+                {
+                    WriteLine("\n***ERROR. State input must be 2 characters long.");
+                    Write($"{"State (2 letters): \t",-5}");
+                    state = ReadLine().ToUpper();
+                }
+                Write($"{"Zip code: \t",-19}");
+                zipCode = ReadLine();
+                while (zipCode.Length != 5)
+                {
+                    WriteLine("\n***ERROR. Zip code must be 5 characters long.");
+                    Write($"{"Zip code: \t",-19}");
+                    zipCode = ReadLine();
+                }
+                Write("Are you a member of our Futility Club, the frequent shopper program that rewards persistence over results? (\"Y if yes\"): ");
+                decision = ReadLine().ToUpper();
+                if (decision == "Y")
+                {
+                    WriteLine("\nExcellent! You'll receive an AMAZING 15% discount on today's purchase!\nWhat's more, as a valued member of our loyalty program, you'll have a chanceto win a bonus gift in our exciting Members - Only Invisible PaintExtravaganza contest!");
+                    Write("Pick a number between 1 and 10: ");
+                    int.TryParse(ReadLine(), out myGuess);
+                    if (myGuess == guess)
+                    {
+                        WriteLine($"Woo hoo! You guessed the secret number: {guess}!");
+                        WriteLine("A gallon of ACME Invisible Paint is headed your way!");
+                    }
+                    else
+                    {
+                        WriteLine($"So sorry :( the number was {guess}");
+                    }
+                }
+                else if (decision == "N")
+                {
+                    WriteLine("\nWhat's wrong with you? That just cost you a 15% discount and an opportunity to win a gallon of invisible paint.Sad.");
+                }
+
+                WriteLine("\nPress any key to display invoice. . .");
+                ReadKey();
+                WriteLine("\n****************************************************************************");
+                WriteLine("************************ ACME Anvils Corporation ***************************");
+                WriteLine("Customer Invoice".ToUpper());
+                WriteLine("\nSHIP TO:");
+                WriteLine($"\t{name}");
+                WriteLine($"\t{street}");
+                WriteLine($"\t{city}");
+                WriteLine($"\t{state}");
+                WriteLine($"\t{zipCode}");
+                WriteLine();
+
+                WriteLine($"{"Quantity ordered: ",-15} {numOfAnvils,13}");
+                WriteLine($"{"Cost per anvil: ",-15} {anvilPrice,15:C}");
+                WriteLine($"{"Subtotal: ",-16} {total,15:C}");
+                if (decision == "Y")
+                {
+                    discount = total * FrequentShopperProgram;
+                    WriteLine($"{"Less 15% Futility Club:\t",-18} {discount,6:C}");
+
+                }
+                else
+                {
+                    discount = 0;
+                    WriteLine($"{"No discount for you!:\t",-18} {discount,7:C}");
+                }
+                WriteLine($"{"Taxable amount:\t",-15}{total - discount,16:C}");
+                taxAfterDiscount = (total - discount) * SalesTax;
+                WriteLine($"{"Sales Tax:",-17}{taxAfterDiscount,15:C}");
+                WriteLine("________________________________");
+                WriteLine($"{"Total: \t",-17}{total - discount + taxAfterDiscount,15:C}");
+
+                if (myGuess == guess)
+                {
+                    WriteLine("And congratulations on winning FREE INVISIBLE PAINT!!!");
+                }
+                WriteLine("****************************************************************************");
+                WriteLine($"\nYour total today is {total - discount + taxAfterDiscount:C}.  Thanks for shopping with Acme!");
+                WriteLine("\nAnd don't forget: Acme anvils fly farther, drop faster, and land harder than any other anvil on the market!");
+                WriteLine("\nAre finished ordering today? ");
+                decision2 = ReadLine().ToUpper();
+                if (decision2 == "Y")
+                {
+                    WriteLine("\nPress any key to quit");
+                    ReadKey();
+                }
+                WriteLine();
+
+
+
+
+            } while (decision2 == "N");
+            WriteLine("Have a good day!");
+
+
+        }
+
+    }
+}
